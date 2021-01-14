@@ -16,21 +16,21 @@
 ### Association
 
 - has_many :products
-- has_many :product_purchase
+- has_many :product_purchases
 
 ## products テーブル
 
-| Column        | Type       | Options           |
-| ------------- | ---------- | ----------------- |
-| name          | string     | null: false       |
-| description   | text       | null: false       |
-| category      | integer    | null: false       |
-| condition     | integer    | null: false       |
-| shipping_cost | integer    | null: false       |
-| prefecture    | integer    | null: false       |
-| shipping_days | integer    | null: false       |
-| price         | integer    | null: false       |
-| user          | references | foreign_key: true |
+| Column           | Type       | Options           |
+| ---------------- | ---------- | ----------------- |
+| name             | string     | null: false       |
+| description      | text       | null: false       |
+| category_id      | integer    | null: false       |
+| condition_id     | integer    | null: false       |
+| shipping_cost_id | integer    | null: false       |
+| prefecture_id    | integer    | null: false       |
+| shipping_day_id  | integer    | null: false       |
+| price            | integer    | null: false       |
+| user             | references | foreign_key: true |
 
 ### Association
 
@@ -55,7 +55,7 @@
 | Column        | Type    | Options     |
 | ------------- | ------- | ----------- |
 | postal_code   | string  | null: false |
-| prefecture    | integer | null: false |
+| prefecture_id | integer | null: false |
 | municipality  | string  | null: false |
 | address       | string  | null: false |
 | building_name | string  |             |
