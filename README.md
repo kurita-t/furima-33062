@@ -37,7 +37,7 @@
 - belongs_to :user
 - has_one :product_purchase
 
-## product_purchase テーブル
+## product_purchases テーブル
 
 | Column     | Type       | Options           |
 | ---------- | ---------- | ----------------- |
@@ -50,7 +50,7 @@
 - belongs_to :product
 - has_one :shipping_address
 
-## shipping_address テーブル
+## shipping_addresses テーブル
 
 | Column        | Type    | Options     |
 | ------------- | ------- | ----------- |
