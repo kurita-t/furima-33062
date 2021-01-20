@@ -1,15 +1,16 @@
 class Product < ApplicationRecord
   belongs_to :user
   has_one_attached :image
-  
-  with_options presence: true do
-    validates :name
-    validates :description
-    validates :category_id
-    validates :condition_id
-    validates :shipping_cost_id
-    validates :prefecture_id
-    validates :shipping_day_id
-    validates :price
-  end
+  extend ActiveHash::Associations::ActiveRecordExtensions
+  belongs_to :category
+  belongs_to :condition
+  belongs_to :shipping_cost
+  belongs_to :prefecture
+  belongs_to :shipping_day
+
+  validates :name, :description, :price presence: true
+
+  #ジャンルの選択が「--」の時は保存できないようにする
+  validates :category_id, :condition_id, :shipping_cost_id, :prefecture_id, :shipping_day_id, numericality: { other_than: 1 }
+
 end
