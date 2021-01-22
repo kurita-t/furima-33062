@@ -12,6 +12,7 @@ class Product < ApplicationRecord
     validates :name, length: {minimum: 1, maximum: 40 }
     validates :description, length: {minimum: 1, maximum: 1000 }
     validates :price
+    validates :image
   end
   validates :price, numericality: { only_integer: true,  greater_than: 299, less_than: 9999999}
 
