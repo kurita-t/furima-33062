@@ -26,10 +26,6 @@ RSpec.describe Product, type: :model do
         @product.price = "999999"
         expect(@product).to be_valid
       end
-      it "priceが300以上だと登録できること" do
-        @product.price = "300"
-        expect(@product).to be_valid
-      end
     end
 
     context "商品出品情報が登録できない場合" do
@@ -58,31 +54,58 @@ RSpec.describe Product, type: :model do
         @product.valid?
         expect(@product.errors.full_messages).to include("Category is not a number")
       end
+      it "category_idが1では登録できないこと" do
+        @product.category_id = "1"
+        @product.valid?
+        expect(@product.errors.full_messages).to include("Category must be other than 1")
+      end
       it "condition_idがない場合は登録できないこと" do
         @product.condition_id = nil
         @product.valid?
         expect(@product.errors.full_messages).to include("Condition is not a number")
       end
-   
+      it "condition_idが1では登録できないこと" do
+        @product.condition_id = "1"
+        @product.valid?
+        expect(@product.errors.full_messages).to include("Condition must be other than 1")
+      end
       it "prefecture_idがない場合は登録できないこと" do
         @product.prefecture_id = nil
         @product.valid?
         expect(@product.errors.full_messages).to include("Prefecture is not a number")
       end
-   
+      it "prefecture_idが1では登録できないこと" do
+        @product.prefecture_id = "1"
+        @product.valid?
+        expect(@product.errors.full_messages).to include("Prefecture must be other than 1")
+      end
       it "shipping_day_idがない場合は登録できないこと" do
         @product.shipping_day_id = nil
         @product.valid?
         expect(@product.errors.full_messages).to include("Shipping day is not a number")
       end
-   
+      it "shipping_day_idが1では登録できないこと" do
+        @product.shipping_day_id = "1"
+        @product.valid?
+        expect(@product.errors.full_messages).to include("Shipping day must be other than 1")
+      end
       it "priceがない場合は登録できないこと" do
         @product.price = nil
         @product.valid?
         expect(@product.errors.full_messages).to include("Price can't be blank")
       end
-      it "販売価格は半角数字でない場合登録できないこと" do
+      it "priceが全角数字では登録できないこと" do
         @product.price = '１０００'
+        @product.valid?
+        expect(@product.errors.full_messages).to include('Price is not a number')
+      end
+      it "priceが半角英数混合では登録できないこと" do
+        @product.price = '11aa'
+        @product.valid?
+        expect(@product.errors.full_messages).to include('Price is not a number')
+      end
+      it "priceが半角英語だけでは登録できないこと" do
+        @product.price = 'aaa'
         @product.valid?
         expect(@product.errors.full_messages).to include('Price is not a number')
       end
