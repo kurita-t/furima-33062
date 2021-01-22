@@ -1,12 +1,11 @@
 class ProductsController < ApplicationController
   before_action :move_to_index, only: [:new, :create, :edit, :update, :destroy]
   def index
-    @products = Product.order("created_at DESC")
+    @products = Product.all.order('created_at DESC')
   end
 
   def new
     @product = Product.new
-
   end
 
   def create
@@ -25,6 +24,7 @@ class ProductsController < ApplicationController
   end
 
   def product_params
-    params.require(:product).permit(:image, :name, :description, :category_id, :condition_id, :shipping_cost_id, :prefecture_id, :shipping_day_id, :price).merge(user_id: current_user.id)
+    params.require(:product).permit(:image, :name, :description, :category_id, :condition_id, :shipping_cost_id, :prefecture_id,
+                                    :shipping_day_id, :price).merge(user_id: current_user.id)
   end
 end
