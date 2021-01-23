@@ -47,9 +47,7 @@ class ProductsController < ApplicationController
 
   def ensure_current_user
     product = Product.find(params[:id])
-    if product.user_id != current_user.id
-      redirect_to action: :index
-    end
+    redirect_to action: :index if product.user_id != current_user.id
   end
 
   def set_product
