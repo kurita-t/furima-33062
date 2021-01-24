@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
   before_action :move_to_index, only: [:new, :create, :edit, :update, :destroy]
-  before_action :set_product, only: [:edit, :show, :update]
+  before_action :set_product, only: [:edit, :show, :update, :destroy]
   before_action :ensure_current_user, only: [:edit, :update]
 
   def index
@@ -35,11 +35,11 @@ class ProductsController < ApplicationController
   end
 
   def destroy
-    product = Product.find(params[:id])
-    if product.destroy
+    if current_user.id == @product.user_id
+      @product.destroy
       redirect_to root_path
     else
-      redirect_to root_path
+      redirect_to :show
     end
   end
 
