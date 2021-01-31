@@ -10,7 +10,7 @@ RSpec.describe PurchaseAddress, type: :model do
 
   describe '配送先住所' do
     context '配送先住所が登録できる場合' do
-      it '郵便番号・都道府県・市区町村・番地・電話番号があれば配送先住所が登録されること' do
+      it '郵便番号・都道府県・市区町村・番地・電話番号・トークンがあれば配送先住所が登録されること' do
         expect(@purchase_address).to be_valid
       end
       it '郵便番号にはハイフンがあれば登録できること' do
@@ -77,7 +77,11 @@ RSpec.describe PurchaseAddress, type: :model do
         @purchase_address.valid?
         expect(@purchase_address.errors.full_messages).to include("Phone number is invalid")
       end
-      
+      it "tokenが空では登録できないこと" do
+        @purchase_address.token = nil
+        @purchase_address.valid?
+        expect(@purchase_address.errors.full_messages).to include("Token can't be blank")
+      end
     end
   end
 end
