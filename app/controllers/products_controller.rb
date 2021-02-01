@@ -55,7 +55,7 @@ class ProductsController < ApplicationController
   end
 
   def ensure_current_user
-    redirect_to action: :index if @product.user_id != current_user.id
+    redirect_to action: :index if @product.user_id != current_user.id || @product.product_purchase.present?
   end
 
   def set_product
