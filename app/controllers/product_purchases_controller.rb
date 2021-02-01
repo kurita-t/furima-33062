@@ -1,15 +1,13 @@
 class ProductPurchasesController < ApplicationController
   before_action :authenticate_user!
-  before_action :product, only: [:index, :ensure_current_user]
+  before_action :product
   before_action :ensure_current_user
-  before_action :purchased_products
 
   def index
     @purchase_address = PurchaseAddress.new
   end
 
   def create
-    @product = Product.find(params[:product_id])
     @purchase_address = PurchaseAddress.new(purchase_address_params)
     if @purchase_address.valid?
       pay_order
@@ -31,18 +29,14 @@ class ProductPurchasesController < ApplicationController
   def pay_order
   Payjp.api_key = ENV['PAYJP_SECRET_KEY']
       Payjp::Charge.create(
-        amount: Product.find(params[:product_id]).price,
+        amount: @product.price,
         card: purchase_address_params[:token],
         currency: 'jpy'
       )
   end
 
   def ensure_current_user
-    redirect_to root_path if @product.user_id == current_user.id
-  end
-
-  def purchased_products
-    if @product.product_purchase.present?
+    if @product.user_id == current_user.id || @product.product_purchase.present?
       redirect_to root_path
     end
   end
