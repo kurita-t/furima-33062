@@ -1,8 +1,8 @@
 class ProductPurchasesController < ApplicationController
   before_action :authenticate_user!
+  before_action :product, only: [:index, :ensure_current_user]
   before_action :ensure_current_user
   before_action :purchased_products
-  before_action :product, only: [:index, :ensure_current_user]
 
   def index
     @purchase_address = PurchaseAddress.new
