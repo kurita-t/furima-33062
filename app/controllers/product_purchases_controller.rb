@@ -1,5 +1,5 @@
 class ProductPurchasesController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, only: [:index, :create]
   before_action :product
   before_action :ensure_current_user
 
