@@ -2,10 +2,10 @@ class ProductPurchasesController < ApplicationController
   before_action :authenticate_user!
   before_action :ensure_current_user
   before_action :purchased_products
+  before_action :product, only: [:index, :ensure_current_user]
 
   def index
     @purchase_address = PurchaseAddress.new
-    @product = Product.find(params[:product_id])
   end
 
   def create
@@ -38,7 +38,6 @@ class ProductPurchasesController < ApplicationController
   end
 
   def ensure_current_user
-    @product = Product.find(params[:product_id])
     redirect_to root_path if @product.user_id == current_user.id
   end
 
@@ -46,5 +45,9 @@ class ProductPurchasesController < ApplicationController
     if @product.product_purchase.present?
       redirect_to root_path
     end
+  end
+
+  def product
+    @product = Product.find(params[:product_id])
   end
 end

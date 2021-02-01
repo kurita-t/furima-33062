@@ -10,23 +10,11 @@ RSpec.describe PurchaseAddress, type: :model do
 
   describe '配送先住所' do
     context '配送先住所が登録できる場合' do
-      it '郵便番号・都道府県・市区町村・番地・電話番号・トークンがあれば配送先住所が登録されること' do
-        expect(@purchase_address).to be_valid
-      end
-      it '郵便番号にはハイフンがあれば登録できること' do
-        @purchase_address.postal_code = '123-4567'
-        expect(@purchase_address).to be_valid
-      end
-      it '電話番号にはハイフンは不要で、11桁以内であれば登録できること' do
-        @purchase_address.phone_number = '12345678901'
+      it '郵便番号・都道府県・市区町村・番地・建物名・電話番号・トークンがあれば配送先住所が登録されること' do
         expect(@purchase_address).to be_valid
       end
       it '建物名がなくても登録されること' do
         @purchase_address.building_name = nil
-        expect(@purchase_address).to be_valid
-      end
-      it '建物名があっても登録されること' do
-        @purchase_address.building_name = '建物名101'
         expect(@purchase_address).to be_valid
       end
     end
@@ -81,6 +69,16 @@ RSpec.describe PurchaseAddress, type: :model do
         @purchase_address.token = nil
         @purchase_address.valid?
         expect(@purchase_address.errors.full_messages).to include("Token can't be blank")
+      end
+      it 'user_idが空では登録できないこと' do
+        @purchase_address.user_id = nil
+        @purchase_address.valid?
+        expect(@purchase_address.errors.full_messages).to include("User can't be blank")
+      end
+      it 'product_idが空では登録できないこと' do
+        @purchase_address.product_id = nil
+        @purchase_address.valid?
+        expect(@purchase_address.errors.full_messages).to include("Product can't be blank")
       end
     end
   end
